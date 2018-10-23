@@ -26,7 +26,7 @@
 //     console.log(arr);
 // }
 // makeArr(5);
-let arr = [[1,0,1,0,1],[1,0,0,1,0],[0,1,1,0,1],[0,0,1,1,0],[1,1,0,0,1]];
+let arr = [[1,0,1,0,1],[1,0,0,1,0],[0,1,1,0,1],[0,0,1,1,0],[1,1,0,1,1]];
 
 function letsPlay() {
     for (let y=0; y<arr.length; y++) {
@@ -36,13 +36,24 @@ function letsPlay() {
     }
 }
 function checkForLife(i,j) {
-    if (arr[i][j] === 1) aliveCounter++;
-    if (arr[i][j] === 0) deadCounter++;
+    if (arr[i][j] === 1) {
+        checkNextAlive(i,j);
+    }
+    if (arr[i][j] === 0) {
+        // checkNextDead();
+        deadCounter++;
+    }
 }
 
-let aliveCounter = 0;
+function checkNextAlive(q,w) {
+    let aliveCounter = 0;
+    if (arr[q][w + 1] === 1) {
+        aliveCounter++;
+    }
+    console.log('Alive: ', aliveCounter);
+}
+
 let deadCounter = 0;
 console.log(arr);
 letsPlay();
-console.log('Alive: ', aliveCounter);
 console.log('Dead: ', deadCounter);
