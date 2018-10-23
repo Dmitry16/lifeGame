@@ -44,10 +44,16 @@ function checkForLife(i,j) {
         deadCounter++;
     }
 }
-
 function checkNextAlive(q,w) {
     let aliveCounter = 0;
-    if (arr[q][w + 1] === 1) {
+    
+    if (arr[q][w + 1] && arr[q][w + 1] === 1) {
+        aliveCounter++;
+    }
+    if (arr[q + 1][w] && arr[q + 1][w] === 1) {
+        aliveCounter++;
+    }
+    if (arr[q + 1][w + 1] && arr[q + 1][w + 1] === 1) {
         aliveCounter++;
     }
     console.log('Alive: ', aliveCounter);
