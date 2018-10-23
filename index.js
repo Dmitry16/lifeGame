@@ -50,16 +50,35 @@ function checkNextAlive(q,w) {
     if (arr[q][w + 1] && arr[q][w + 1] === 1) {
         aliveCounter++;
     }
-    if (arr[q + 1][w] && arr[q + 1][w] === 1) {
+    if (arr[q][w - 1] && arr[q][w - 1] === 1) {
         aliveCounter++;
     }
-    if (arr[q + 1][w + 1] && arr[q + 1][w + 1] === 1) {
+    if (arr[q + 1] && arr[q + 1][w] === 1) {
         aliveCounter++;
     }
-    console.log('Alive: ', aliveCounter);
+    if (arr[q - 1] && arr[q - 1][w] === 1) {
+        aliveCounter++;
+    }
+    if (arr[q + 1] && arr[q + 1][w + 1] && arr[q + 1][w + 1] === 1) {
+        aliveCounter++;
+    }
+    if (arr[q + 1] && arr[q + 1][w - 1] && arr[q + 1][w - 1] === 1) {
+        aliveCounter++;
+    }
+    if (arr[q - 1] && arr[q - 1][w + 1] && arr[q - 1][w + 1] === 1) {
+        aliveCounter++;
+    }
+    if (arr[q - 1] && arr[q - 1][w - 1] && arr[q - 1][w - 1] === 1) {
+        aliveCounter++;
+    }
+    if (aliveCounter < 2 || aliveCounter > 3) {
+        arr[q][w] = 0;
+    }
 }
 
 let deadCounter = 0;
 console.log(arr);
 letsPlay();
+console.log('------------------------');
+console.log(arr);
 console.log('Dead: ', deadCounter);
