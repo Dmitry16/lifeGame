@@ -1,92 +1,57 @@
 
-let arr = [[1,0,1,0,1],[1,0,0,1,0],[0,1,1,0,1],[0,0,1,1,0],[1,1,0,1,1]];
-let mutatedArrForAlive = arr.slice();
-let mutatedArrForDead = arr.slice();
+let arr = [[0,0,1,0,1],[1,0,0,1,0],[0,1,0,0,1],[0,0,1,1,0],[0,1,0,1,1]];
+let aliveMutation = arr.map(el => [...el]);
+let deadMutation = arr.map(el => [...el]);
 
 function letsPlay() {
     for (let y=0; y<arr.length; y++) {
         for (let x=0; x<arr.length; x++) {
-            checkForLife(x,y)
+            checkCell(x,y)
         }
     }
 }
-function checkForLife(i,j) {
+function checkCell(i,j) {
     if (arr[i][j] === 1) {
-        checkNextAlive(i,j);
+        checkBro('alive', i,j);
     }
     if (arr[i][j] === 0) {
-        checkNextDead(i,j);
+        checkBro('dead', i,j);
     }
 }
-function checkNextDead(q,w) {
+function checkBro(target, q,w) {
     let nextAlive = 0;
-    
-    if (arr[q][w + 1] && arr[q][w + 1] === 0) {
-        nextAlive++;
+    if (arr[q][w + 1] && arr[q][w + 1] === 1) nextAlive++;
+
+    if (arr[q][w - 1] && arr[q][w - 1] === 1) nextAlive++;
+
+    if (arr[q + 1] && arr[q + 1][w] === 1) nextAlive++;
+
+    if (arr[q - 1] && arr[q - 1][w] === 1) nextAlive++;
+
+    if (arr[q + 1] && arr[q + 1][w + 1] && arr[q + 1][w + 1] === 1) nextAlive++;
+
+    if (arr[q + 1] && arr[q + 1][w - 1] && arr[q + 1][w - 1] === 1) nextAlive++;
+
+    if (arr[q - 1] && arr[q - 1][w + 1] && arr[q - 1][w + 1] === 1) nextAlive++;
+
+    if (arr[q - 1] && arr[q - 1][w - 1] && arr[q - 1][w - 1] === 1) nextAlive++;
+
+    if (target === 'alive') {
+        if (nextAlive < 2 || nextAlive > 3) {
+            aliveMutation[q][w] = 0;
+        }
     }
-    if (arr[q][w - 1] && arr[q][w - 1] === 0) {
-        nextAlive++;
-    }
-    if (arr[q + 1] && arr[q + 1][w] === 0) {
-        nextAlive++;
-    }
-    if (arr[q - 1] && arr[q - 1][w] === 0) {
-        nextAlive++;
-    }
-    if (arr[q + 1] && arr[q + 1][w + 1] && arr[q + 1][w + 1] === 0) {
-        nextAlive++;
-    }
-    if (arr[q + 1] && arr[q + 1][w - 1] && arr[q + 1][w - 1] === 0) {
-        nextAlive++;
-    }
-    if (arr[q - 1] && arr[q - 1][w + 1] && arr[q - 1][w + 1] === 0) {
-        nextAlive++;
-    }
-    if (arr[q - 1] && arr[q - 1][w - 1] && arr[q - 1][w - 1] === 0) {
-        nextAlive++;
-    }
-    if (nextAlive >= 3) {
-        mutatedArrForDead[q][w] = 1;
-    }
-}
-function checkNextAlive(q,w) {
-    let nextAlive = 0;
-    
-    if (arr[q][w + 1] && arr[q][w + 1] === 1) {
-        nextAlive++;
-    }
-    if (arr[q][w - 1] && arr[q][w - 1] === 1) {
-        nextAlive++;
-    }
-    if (arr[q + 1] && arr[q + 1][w] === 1) {
-        nextAlive++;
-    }
-    if (arr[q - 1] && arr[q - 1][w] === 1) {
-        nextAlive++;
-    }
-    if (arr[q + 1] && arr[q + 1][w + 1] && arr[q + 1][w + 1] === 1) {
-        nextAlive++;
-    }
-    if (arr[q + 1] && arr[q + 1][w - 1] && arr[q + 1][w - 1] === 1) {
-        nextAlive++;
-    }
-    if (arr[q - 1] && arr[q - 1][w + 1] && arr[q - 1][w + 1] === 1) {
-        nextAlive++;
-    }
-    if (arr[q - 1] && arr[q - 1][w - 1] && arr[q - 1][w - 1] === 1) {
-        nextAlive++;
-    }
-    if (nextAlive < 2 || nextAlive > 3) {
-        mutatedArrForAlive[q][w] = 0;
+    if (target === 'dead') {
+        if (nextAlive >= 3) {
+            deadMutation[q][w] = 1;
+        }
     }
 }
 
-// let deadCounter = 0;
-// let aliveCounter = 0;
-console.log('initialArray:');
+console.log('initial array::');
 console.log(arr);
 letsPlay();
-console.log('mutatedArrForAlive:');
-console.log(mutatedArrForAlive);
-console.log('utatedArrForDead:');
-console.log(mutatedArrForDead);
+console.log('alive mutation to dead::');
+console.log(aliveMutation);
+console.log('dead mutation to alive::');
+console.log(deadMutation);
